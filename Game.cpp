@@ -5,12 +5,12 @@
 
 Game::Game(){
 
-    // Load the snake body (red square)
+    	// Load the snake body (red square)
 	if(!texture2.loadFromFile(resourcePath() + "red.png")){
 		std::cout << "Error loading red.png" << std::endl;
 	}
     
-    // Load the snake food (green square)
+    	// Load the snake food (green square)
 	if(!texture3.loadFromFile(resourcePath() + "green.png")){
 		std::cout << "Error loading green.png" << std::endl;
 	}
@@ -29,13 +29,14 @@ Game::Game(){
 void Game::reset(){
 	direction = 1;
 
+	// Resetting the game
 	for(int i = 0; i < 100; i++)
 		snake[i].x = 0, snake[i].y = 0;
-
 	snakeLength = 2;
 	
 	srand(time(0));
 	
+	// Placing the first fruit in a random location on the window
 	fruit.x = rand() % N;
 	fruit.y = rand() % M;
 
@@ -56,14 +57,17 @@ void Game::play(sf::RenderWindow &window){
 }
 
 bool Game::getPlaying(){
+	// Return a boolean determining whether or not the user is still playing
 	return playing;
 }
 
 void Game::setPlaying(bool b){
+	// Set the boolean determining whether or not the user is still playing
 	playing = b;
 }
 
 void Game::setLevel(int level){
+	// Set the difficulty (speed) of the game
 	if(level == 0)
 		delay = 0.15;
 	else if(level == 1)
@@ -87,40 +91,42 @@ void Game::processEvents(sf::RenderWindow &window){
 }
 
 void Game::update(){
-    // If the snake reaches the fruit, generate a new fruit and increment the snake length
+    	// If the snake reaches the fruit, generate a new fruit and increment the snake length
 	if(snake[0].x == fruit.x && snake[0].y == fruit.y){
 		fruit.x = rand() % N;
 		fruit.y = rand() % M;
 		snakeLength++;
 	}
 	
-    // Adding a new square to the snakes body
+    	// Adding a new square to the snakes body
 	for(int i = snakeLength - 1; i > 0; i--){
 		snake[i].x = snake[i - 1].x;
 		snake[i].y = snake[i - 1].y;
 	}
-
+	
+	// CHange the direction the snake is going
 	if(direction == 0 && snake[0].y - 1 != snake[1].y)
-		snake[0].y -= 1;
+		snake[0].y -= 1;	// Down
 	else if(direction == 1 && snake[0].y + 1 != snake[1].y)
-		snake[0].y += 1;
+		snake[0].y += 1;	// Up
 	else if(direction == 2 && snake[0].x - 1 != snake[1].x)
-		snake[0].x -= 1;
+		snake[0].x -= 1;	// Left
 	else if(direction == 3 && snake[0].x + 1 != snake[1].x)
-		snake[0].x += 1;
+		snake[0].x += 1;	// Right
 
-
-    if(snake[0].x >= N)
-        playing = false;
-    if(snake[0].x < 0)
-        playing = false;
+	// If the snake goes outside the boundry, the game is over.
+    	if(snake[0].x >= N)
+        	playing = false;
+    	if(snake[0].x < 0)
+        	playing = false;
 	if(snake[0].y >= M)
-        playing = false;
+        	playing = false;
 	if(snake[0].y < 0)
 		playing = false;
 
-
+	// If the snake reaches itself (touches its tail), the game is over.
 	for(int i = 1; i < snakeLength; i++){
+		// If snake head.x == snake tail.x && snake head.y == snake tail.y
 		if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
 			snakeLength = 2;
 			playing = false;
@@ -149,7 +155,8 @@ void Game::render(sf::RenderWindow &window){
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key){
-    if((key == sf::Keyboard::Up || key == sf::Keyboard::W) && direction != 1)
+	// Setting WASD and up, down, left, right keyboard controls
+    	if((key == sf::Keyboard::Up || key == sf::Keyboard::W) && direction != 1)
 		direction = 0;
 	else if((key == sf::Keyboard::Down || key == sf::Keyboard::S) && direction != 0)
 		direction = 1;
