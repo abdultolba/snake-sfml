@@ -1,11 +1,13 @@
-# Snake_SFML
+# Snake - SFML
 
-This is a remake of the popular console video game "Snake". I used C++11 and SFML 2.4.2 to make this app. <br/>
-**Requirements: ** 
+This is a remake of the popular console video game "Snake", recreated using C++ and SFML.
 
-C++11 <br/>
-g++ Compiler <br/>
-SFML 2.4.2 (or above) <br/>
+Author: Abdulrahman Tolba
+
+# Requirements:  
+
+- MinGW or other g++ compiler <br/>
+- SFML 2.4.2 (or above) <br/>
 
 
 **Screenshots:** <br/>
